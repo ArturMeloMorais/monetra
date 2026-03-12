@@ -1,15 +1,12 @@
-import lembretes from "./lembretes.json";
+function adicionarLembrete(){
 
-export function adicionarLembrete(titulo, descricao, icone){
+  const novo = {
+    id: Date.now(),
+    usuarioId: usuario.id,
+    titulo: "Novo lembrete",
+    descricao: "Edite este lembrete.",
+    icone: "📌"
+  };
 
-    const novoLembrete = {
-        id: Date.now(),
-        titulo: titulo,
-        descricao: descricao,
-        icone: icone
-    };
-
-    lembretes.push(novoLembrete);
-
-    console.log("Lembrete adicionado:", novoLembrete);
+  setLembretes([...lembretes, novo]);
 }

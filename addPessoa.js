@@ -1,7 +1,8 @@
-import pessoas from "./pessoas.json";
-import * as FileSystem from "expo-file-system";
 
-export function adicionarPessoa(nome, idade, foto, salario, idioma, telefone, email) {
+import pessoas from "./pessoas.json";
+
+export function adicionarPessoa(nome, idade, foto, salario, idioma, telefone, email, senha){
+
   const novaPessoa = {
     id: Date.now(),
     nome: nome,
@@ -10,13 +11,12 @@ export function adicionarPessoa(nome, idade, foto, salario, idioma, telefone, em
     salario: salario,
     idioma: idioma,
     telefone: telefone,
-    email: email
+    email: email,
+    senha: senha
   };
 
   pessoas.push(novaPessoa);
 
-  FileSystem.writeAsStringAsync(
-    FileSystem.documentDirectory + "pessoas.json",
-    JSON.stringify(pessoas)
-  );
+  console.log("Pessoa adicionada:", novaPessoa);
 }
+

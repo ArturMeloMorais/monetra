@@ -1,15 +1,17 @@
-
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, TextInput } from "react-native";
 
 import lembretesData from "../lembretes.json";
-import pessoas from "../pessoas.json";
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({ navigation, route }) {
 
-  const pessoa = pessoas[0];
+  const { usuario } = route.params;
 
-  const [lembretes, setLembretes] = useState(lembretesData);
+  const lembretesDoUsuario = lembretesData.filter(
+    (l) => l.usuarioId === usuario.id
+  );
+
+  const [lembretes, setLembretes] = useState(lembretesDoUsuario);
   const [editando, setEditando] = useState(null);
   const [novoTitulo, setNovoTitulo] = useState("");
   const [novaDescricao, setNovaDescricao] = useState("");
@@ -41,6 +43,7 @@ export default function HomeScreen({ navigation }) {
 
     const novo = {
       id: Date.now(),
+      usuarioId: usuario.id,
       titulo: "Novo lembrete",
       descricao: "Edite este lembrete.",
       icone: "📌"
@@ -53,7 +56,7 @@ export default function HomeScreen({ navigation }) {
     <View style={styles.container}>
 
       <View style={styles.header}>
-        <Text style={styles.title}>Olá, {pessoa.nome}!</Text>
+        <Text style={styles.title}>Olá, {usuario.nome}!</Text>
       </View>
 
       <Text style={styles.section}>Meus Lembretes</Text>
@@ -91,10 +94,8 @@ export default function HomeScreen({ navigation }) {
           ) : (
 
             <View style={{flex:1}}>
-
               <Text style={styles.lembreteTitulo}>{item.titulo}</Text>
               <Text style={styles.lembreteDesc}>{item.descricao}</Text>
-
             </View>
 
           )}
@@ -131,7 +132,7 @@ export default function HomeScreen({ navigation }) {
 
         <TouchableOpacity
           style={styles.botao}
-          onPress={() => navigation.navigate("Planilha")}
+          onPress={() => navigation.navigate("Planilha",{usuario})}
         >
           <Text style={styles.textBotao}>📊</Text>
           <Text style={styles.label}>Planilhas</Text>
@@ -139,7 +140,7 @@ export default function HomeScreen({ navigation }) {
 
         <TouchableOpacity
           style={styles.botao}
-          onPress={() => navigation.navigate("Investimentos")}
+          onPress={() => navigation.navigate("Investimentos",{usuario})}
         >
           <Text style={styles.textBotao}>📈</Text>
           <Text style={styles.label}>Investimentos</Text>
@@ -147,7 +148,7 @@ export default function HomeScreen({ navigation }) {
 
         <TouchableOpacity
           style={styles.botao}
-          onPress={() => navigation.navigate("Perfil")}
+          onPress={() => navigation.navigate("Perfil",{usuario})}
         >
           <Text style={styles.textBotao}>👤</Text>
           <Text style={styles.label}>Conta</Text>
@@ -283,4 +284,3 @@ const styles = StyleSheet.create({
   }
 
 });
-
