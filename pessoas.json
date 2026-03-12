@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "nome": "Lucas Almeida",
+    "idade": 24,
+    "foto": "https://i.pravatar.cc/300",
+    "salario": 4500,
+    "idioma": "Português",
+    "telefone": "(11) 98765-4321",
+    "email": "lucas@email.com"
+  }
+]
