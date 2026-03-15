@@ -1,11 +1,19 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, TextInput } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Dimensions } from "react-native";
+import { BarChart } from "react-native-chart-kit";
 
 import lembretesData from "../lembretes.json";
+import despesas from "../despesas.json";
 
 export default function HomeScreen({ navigation, route }) {
 
   const { usuario } = route.params;
+
+  const dadosUsuario =
+    despesas.find((d) => d.usuarioId === usuario.id) ||
+    { despesasFixas: [], despesasExtras: [] };
+
+  const despesasExtras = dadosUsuario.despesasExtras;
 
   const lembretesDoUsuario = lembretesData.filter(
     (l) => l.usuarioId === usuario.id
@@ -16,21 +24,20 @@ export default function HomeScreen({ navigation, route }) {
   const [novoTitulo, setNovoTitulo] = useState("");
   const [novaDescricao, setNovaDescricao] = useState("");
 
-  function removerLembrete(id){
-    setLembretes(lembretes.filter((item)=> item.id !== id));
+  function removerLembrete(id) {
+    setLembretes(lembretes.filter((item) => item.id !== id));
   }
 
-  function iniciarEdicao(item){
+  function iniciarEdicao(item) {
     setEditando(item.id);
     setNovoTitulo(item.titulo);
     setNovaDescricao(item.descricao);
   }
 
-  function salvarEdicao(id){
-
-    const atualizados = lembretes.map((item)=>{
-      if(item.id === id){
-        return {...item, titulo: novoTitulo, descricao: novaDescricao};
+  function salvarEdicao(id) {
+    const atualizados = lembretes.map((item) => {
+      if (item.id === id) {
+        return { ...item, titulo: novoTitulo, descricao: novaDescricao };
       }
       return item;
     });
@@ -39,8 +46,7 @@ export default function HomeScreen({ navigation, route }) {
     setEditando(null);
   }
 
-  function adicionarLembrete(){
-
+  function adicionarLembrete() {
     const novo = {
       id: Date.now(),
       usuarioId: usuario.id,
@@ -52,6 +58,31 @@ export default function HomeScreen({ navigation, route }) {
     setLembretes([...lembretes, novo]);
   }
 
+  const gastosPorDia = {
+    Domingo: 0,
+    Segunda: 0,
+    Terca: 0,
+    Quarta: 0,
+    Quinta: 0,
+    Sexta: 0,
+    Sabado: 0
+  };
+
+  despesasExtras.forEach((d) => {
+    if (gastosPorDia[d.diaSemana] !== undefined) {
+      gastosPorDia[d.diaSemana] += Number(d.valor);
+    }
+  });
+
+  const dadosGrafico = {
+    labels: Object.keys(gastosPorDia),
+    datasets: [
+      {
+        data: Object.values(gastosPorDia)
+      }
+    ]
+  };
+
   return (
     <View style={styles.container}>
 
@@ -61,14 +92,14 @@ export default function HomeScreen({ navigation, route }) {
 
       <Text style={styles.section}>Meus Lembretes</Text>
 
-      {lembretes.map((item)=>(
+      {lembretes.map((item) => (
         <View key={item.id} style={styles.card}>
 
           <Text style={styles.icone}>{item.icone}</Text>
 
           {editando === item.id ? (
 
-            <View style={{flex:1}}>
+            <View style={{ flex: 1 }}>
 
               <TextInput
                 style={styles.input}
@@ -84,16 +115,16 @@ export default function HomeScreen({ navigation, route }) {
 
               <TouchableOpacity
                 style={styles.salvar}
-                onPress={()=> salvarEdicao(item.id)}
+                onPress={() => salvarEdicao(item.id)}
               >
-                <Text style={{color:"white"}}>Salvar</Text>
+                <Text style={{ color: "white" }}>Salvar</Text>
               </TouchableOpacity>
 
             </View>
 
           ) : (
 
-            <View style={{flex:1}}>
+            <View style={{ flex: 1 }}>
               <Text style={styles.lembreteTitulo}>{item.titulo}</Text>
               <Text style={styles.lembreteDesc}>{item.descricao}</Text>
             </View>
@@ -104,16 +135,16 @@ export default function HomeScreen({ navigation, route }) {
 
             <TouchableOpacity
               style={styles.editar}
-              onPress={()=> iniciarEdicao(item)}
+              onPress={() => iniciarEdicao(item)}
             >
-              <Text style={{color:"white"}}>✏️</Text>
+              <Text style={{ color: "white" }}>✏️</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.remover}
-              onPress={()=> removerLembrete(item.id)}
+              onPress={() => removerLembrete(item.id)}
             >
-              <Text style={{color:"white"}}>X</Text>
+              <Text style={{ color: "white" }}>X</Text>
             </TouchableOpacity>
 
           </View>
@@ -132,7 +163,7 @@ export default function HomeScreen({ navigation, route }) {
 
         <TouchableOpacity
           style={styles.botao}
-          onPress={() => navigation.navigate("Planilha",{usuario})}
+          onPress={() => navigation.navigate("Planilha", { usuario })}
         >
           <Text style={styles.textBotao}>📊</Text>
           <Text style={styles.label}>Planilhas</Text>
@@ -140,7 +171,7 @@ export default function HomeScreen({ navigation, route }) {
 
         <TouchableOpacity
           style={styles.botao}
-          onPress={() => navigation.navigate("Investimentos",{usuario})}
+          onPress={() => navigation.navigate("Investimentos", { usuario })}
         >
           <Text style={styles.textBotao}>📈</Text>
           <Text style={styles.label}>Investimentos</Text>
@@ -148,16 +179,37 @@ export default function HomeScreen({ navigation, route }) {
 
         <TouchableOpacity
           style={styles.botao}
-          onPress={() => navigation.navigate("Perfil",{usuario})}
+          onPress={() => navigation.navigate("Perfil", { usuario })}
         >
           <Text style={styles.textBotao}>👤</Text>
           <Text style={styles.label}>Conta</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.botao}>
-          <Text style={styles.textBotao}>💡</Text>
-          <Text style={styles.label}>Dicas</Text>
-        </TouchableOpacity>
+      </View>
+
+      <View style={styles.graficoContainer}>
+
+        <Text style={styles.graficoTitulo}>
+          Dias que você mais gastou
+        </Text>
+
+        <BarChart
+          data={dadosGrafico}
+          width={Dimensions.get("window").width - 40}
+          height={220}
+          yAxisLabel="R$ "
+          chartConfig={{
+            backgroundColor: "#1c7c43",
+            backgroundGradientFrom: "#1c7c43",
+            backgroundGradientTo: "#1c7c43",
+            decimalPlaces: 0,
+            color: (opacity = 1) => `rgba(255,255,255,${opacity})`,
+            labelColor: (opacity = 1) => `rgba(255,255,255,${opacity})`
+          }}
+          style={{
+            borderRadius: 10
+          }}
+        />
 
       </View>
 
@@ -221,15 +273,13 @@ const styles = StyleSheet.create({
   editar:{
     backgroundColor:"#f0ad4e",
     padding:6,
-    borderRadius:5,
-    alignItems:"center"
+    borderRadius:5
   },
 
   remover:{
     backgroundColor:"#d9534f",
     padding:6,
-    borderRadius:5,
-    alignItems:"center"
+    borderRadius:5
   },
 
   salvar:{
@@ -263,7 +313,7 @@ const styles = StyleSheet.create({
 
   menu:{
     flexDirection:"row",
-    justifyContent:"space-between",
+    justifyContent:"space-around",
     marginTop:20,
     backgroundColor:"#1c7c43",
     padding:15,
@@ -281,6 +331,21 @@ const styles = StyleSheet.create({
   label:{
     color:"white",
     fontSize:12
+  },
+
+  graficoContainer:{
+    marginTop:20,
+    backgroundColor:"#1c7c43",
+    padding:15,
+    borderRadius:10
+  },
+
+  graficoTitulo:{
+    color:"white",
+    fontSize:16,
+    fontWeight:"bold",
+    marginBottom:10,
+    textAlign:"center"
   }
 
 });
