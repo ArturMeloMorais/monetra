@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "nome": "Renda Fixa",
+    "descricao": "Investimentos com baixo risco e rendimento previsível.",
+    "imagem": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+    "link": "https://www.b3.com.br/pt_br/produtos-e-servicos/renda-fixa/"
+  },
+  {
+    "id": 2,
+    "nome": "Criptomoedas",
+    "descricao": "Investimento digital com alta volatilidade e potencial de retorno.",
+    "imagem": "https://cdn-icons-png.flaticon.com/512/825/825540.png",
+    "link": "https://coinmarketcap.com/"
+  },
+  {
+    "id": 3,
+    "nome": "Previdência Privada",
+    "descricao": "Forma de investimento voltada para aposentadoria futura.",
+    "imagem": "https://cdn-icons-png.flaticon.com/512/3063/3063822.png",
+    "link": "https://www.gov.br/previdencia"
+  }
+]

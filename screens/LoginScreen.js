@@ -1,0 +1,74 @@
+import React, { useState } from "react";
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from "react-native";
+
+import pessoas from "../pessoas.json";
+
+export default function LoginScreen({ navigation }) {
+
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+
+  function validarLogin() {
+
+    if (!email || !senha) {
+      alert("Por favor, preencha todos os campos.");
+      return;
+    }
+
+    const usuarioEncontrado = pessoas.find((p) => p.email === email);
+
+    if (!usuarioEncontrado) {
+      alert("Usuário não cadastrado");
+      return;
+    }
+
+    if (usuarioEncontrado.senha !== senha) {
+      alert("Senha incorreta");
+      return;
+    }
+
+    navigation.navigate("Home", {
+      usuario: usuarioEncontrado
+    });
+  }
+
+  return (
+    <View style={styles.container}>
+
+      <Text style={styles.title}>Bem-vindo de volta!</Text>
+
+      <TextInput
+        placeholder="Email"
+        style={styles.input}
+        value={email}
+        onChangeText={setEmail}
+        autoCapitalize="none"
+        keyboardType="email-address"
+      />
+
+      <TextInput
+        placeholder="Senha"
+        secureTextEntry
+        style={styles.input}
+        value={senha}
+        onChangeText={setSenha}
+      />
+
+      <TouchableOpacity 
+        style={styles.button}
+        onPress={validarLogin}
+      >
+        <Text style={styles.buttonText}>Entrar</Text>
+      </TouchableOpacity>
+
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, justifyContent: "center", padding: 20, backgroundColor: "#fff" },
+  title: { fontSize: 24, marginBottom: 20, textAlign: "center" },
+  input: { borderWidth: 1, padding: 10, marginBottom: 10, borderRadius: 10, borderColor: "#000" },
+  button: { backgroundColor: "#e0dd00", padding: 12, borderRadius: 10, alignItems: "center" },
+  buttonText: { color: "#fff", fontWeight: "bold" }
+});
