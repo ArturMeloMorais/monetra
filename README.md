@@ -6,6 +6,7 @@
 
 
 **2. Escopo do Produto**
+
    2.1 Funcionalidades principais 
 * Gestão de Planilhas: Criação e edição de tabelas financeiras personalizadas
 * Organização de Gastos: Controle mensal detalhado de despesas
@@ -47,5 +48,10 @@ RF003	 | Enviar notificações por e-mail sobre eventos relevantes      | Baixa
 **5. Partes Interessadas (Stakeholders)**
 - Pequenos Empresários: Usuários e aprovadores do sistema.  
 - Trabalhadores: Usuários finais.  
-- Empresas de Investimento: Potenciais investidores no projeto.  
+- Empresas de Investimento: Potenciais investidores no projeto. 
 - Equipe de TI: Responsável pelo suporte e manutenção.
+
+
+**6. Riscos identificados**
+* Mudança de Escopo: Gerido através do controle rígido de mudanças do processo RUP 
+* Dificuldade de Adoção: Mitigado através de treinamentos e manuais de usuário
