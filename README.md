@@ -41,4 +41,11 @@ RF003	 | Enviar notificações por e-mail sobre eventos relevantes      | Baixa
    - O sistema é desenvolvido como uma aplicação Web Stand-alone.
    - Banco de Dados: Relacional (PostgreSQL ou MySQL).
    - Integrações: Servidor SMTP para envio de notificações por e-mail.
-   - Compatibilidade: Navegadores modernos como Chrome, Firefox, Edge e Safari.  
+   - Compatibilidade: Navegadores modernos como Chrome, Firefox, Edge e Safari.
+
+
+**5. Partes Interessadas (Stakeholders)**
+- Pequenos Empresários: Usuários e aprovadores do sistema.  
+- Trabalhadores: Usuários finais.  
+- Empresas de Investimento: Potenciais investidores no projeto.  
+- Equipe de TI: Responsável pelo suporte e manutenção.
