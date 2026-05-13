@@ -19,8 +19,26 @@
 
 
 **3. Requisitos do sistema**
+
    3.1 Requisitos funcionais (principais)
+   
 **ID 	 | Requisito	                                                 | Prioridade**
+
 RF001  |	Permitir o gerenciamento de ganhos e perdas                  | Alta
+
 RF002	 | Controlar acesso ao sistema baseado em perfis(usuário/admin) | Alta
+
 RF003	 | Enviar notificações por e-mail sobre eventos relevantes      | Baixa
+
+   3.2 Requisitos não Funcionais
+* Desempenho: Resposta a 95% das requisições em menos de 3 segundos
+* Segurança: Comunicação via TLS/HTTPS e senhas armazenadas com hash bcrypt
+* Escalabilidade: Suporte para até 5.000 usuários simultâneos
+* Disponibilidade: Mínima de 99% em horário comercial
+
+
+**4. Arquitetura e tecnologias**
+   - O sistema é desenvolvido como uma aplicação Web Stand-alone.
+   - Banco de Dados: Relacional (PostgreSQL ou MySQL).
+   - Integrações: Servidor SMTP para envio de notificações por e-mail.
+   - Compatibilidade: Navegadores modernos como Chrome, Firefox, Edge e Safari.  
