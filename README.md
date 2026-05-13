@@ -51,6 +51,22 @@ RF003	 | Enviar notificações por e-mail sobre eventos relevantes      | Baixa
 - Empresas de Investimento: Potenciais investidores no projeto. 
 - Equipe de TI: Responsável pelo suporte e manutenção.
 
+### Mapa de Stakeholders
+```mermaid
+mindmap
+  root((Monetra))
+    Principais Usuários
+      Pequenos Empresários
+      Trabalhadores Comuns
+    Equipe do Projeto
+      Artur Melo: Admin
+      Damarys: Operações
+      Ester: Dados/Suporte
+      Yasmin: Interface/Conteúdo
+    Interessados Externos
+      Empresas de Investimento
+```
+
 
 **6. Riscos identificados**
 * Mudança de Escopo: Gerido através do controle rígido de mudanças do processo RUP 
