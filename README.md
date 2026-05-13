@@ -2,7 +2,9 @@
    
    O Monetra é uma solução voltada para pessoas comuns e pequenos empresários que enfrentam dificuldades no controle de suas finanças. Diferente de planilhas isoladas, o app combina funcionalidades práticas de gestão com uma linguagem educativa sobre o mercado financeiro.  
    
-   Status do Projeto: Em Revisão.  // Versão: 1.0.  // Metodologia: RUP (Fase de Elaboração). 
+   * Status do Projeto: Em Revisão.  
+   * Versão: 1.0.  
+   * Metodologia: RUP (Fase de Elaboração). 
 
 
 ### **2. Escopo do Produto**
@@ -36,17 +38,17 @@
 
 
 ### **4. Arquitetura e tecnologias**
-   - O sistema é desenvolvido como uma aplicação Web Stand-alone.
-   - Banco de Dados: Relacional (PostgreSQL ou MySQL).
-   - Integrações: Servidor SMTP para envio de notificações por e-mail.
-   - Compatibilidade: Navegadores modernos como Chrome, Firefox, Edge e Safari.
+   * O sistema é desenvolvido como uma aplicação Web Stand-alone.
+   * Banco de Dados: Relacional (PostgreSQL ou MySQL).
+   * Integrações: Servidor SMTP para envio de notificações por e-mail.
+   * Compatibilidade: Navegadores modernos como Chrome, Firefox, Edge e Safari.
 
 
 ### **5. Partes Interessadas (Stakeholders)**
-- Pequenos Empresários: Usuários e aprovadores do sistema.  
-- Trabalhadores: Usuários finais.  
-- Empresas de Investimento: Potenciais investidores no projeto. 
-- Equipe de TI: Responsável pelo suporte e manutenção.
+* Pequenos Empresários: Usuários e aprovadores do sistema.  
+* Trabalhadores: Usuários finais.  
+* Empresas de Investimento: Potenciais investidores no projeto. 
+* Equipe de TI: Responsável pelo suporte e manutenção.
 
 ### 5.1 Mapa de Stakeholders
 ```mermaid
