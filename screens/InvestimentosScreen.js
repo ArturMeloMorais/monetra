@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Image, ActivityIndicator, StyleSheet, TouchableOpacity, Linking } from 'react-native';
+import { View, Text, FlatList, Image, ActivityIndicator, StyleSheet, TouchableOpacity, Linking} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { getTopCoins } from '../services/api'; // Importe a função criada acima
 
 export default function InvestimentoScreen() {
   const [investimentos, setInvestimentos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigation = useNavigation();
 
   useEffect(() => {
     async function carregarDados() {
@@ -25,6 +27,11 @@ export default function InvestimentoScreen() {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity 
+      onPress = {() => navigation.navigate('RendaFixa')}
+      style = {{ paddingHorizontal: 10, paddingVertical: 5,backgroundColor: '#ccc', borderRadius: 8, marginBottom: 10, alignSelf: 'flex-start' }}>
+    <Text style = {{ fontSize: 8, color: '#000'}}>Renda Fixa</Text>
+      </TouchableOpacity>
       <FlatList
         data={investimentos}
         keyExtractor={(item) => item.id}

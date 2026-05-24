@@ -7,6 +7,7 @@ import HomeScreen from "../screens/HomeScreen";
 import PlanilhaScreen from "../screens/PlanilhaScreen";
 import InvestimentosScreen from "../screens/InvestimentosScreen";
 import PerfilScreen from "../screens/PerfilScreen";
+import RendaFixaScreen from "../screens/RendaFixaScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -59,6 +60,12 @@ export default function Navigation() {
           name="Perfil" 
           component={PerfilScreen}
           options={{ title: "Meu Perfil" }}
+        />
+
+        <Stack.Screen 
+          name="RendaFixa" 
+          component={RendaFixaScreen}
+          options={{ title: "Renda Fixa" }}
         />
 
       </Stack.Navigator>

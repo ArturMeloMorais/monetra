@@ -21,5 +21,16 @@
     "telefone": "(21) 99876-5432",
     "email": "mariana@email.com",
     "senha": "abc123"
+  },
+  {
+    "id": 3,
+    "nome": "Pessoa",
+    "idade": 28,
+    "foto": "https://i.pravatar.cc/301",
+    "salario": 6200,
+    "idioma": "Português / Inglês",
+    "telefone": "(21) 99876-5432",
+    "email": "email",
+    "senha": "senha"
   }
 ]
