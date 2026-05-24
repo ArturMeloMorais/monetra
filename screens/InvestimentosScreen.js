@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Image, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, Text, FlatList, Image, ActivityIndicator, StyleSheet, TouchableOpacity, Linking } from 'react-native';
 import { getTopCoins } from '../services/api'; // Importe a função criada acima
 
 export default function InvestimentoScreen() {
@@ -28,15 +28,27 @@ export default function InvestimentoScreen() {
       <FlatList
         data={investimentos}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.card}>
+        renderItem={({ item }) => {
+
+          const variacao = item.price_change_percentage_24h || 0;
+          const aumento = variacao >= 0;
+          const preco = item?.current_price ?? 0;
+
+          return (
+          <TouchableOpacity style={styles.card}
+          onPress = {() =>
+            Linking.openURL(`https://www.coingecko.com/en/coins/${item.id}`)}>
+          
             <Image source={{ uri: item.image }} style={styles.icon} />
             <View>
               <Text style={styles.nome}>{item.name} ({item.symbol.toUpperCase()})</Text>
-              <Text style={styles.preco}>Preço: ${item.current_price.toLocaleString()}</Text>
+              <Text style={styles.preco}>Preço: ${preco.toLocaleString()}
+                ({aumento ? '+' : '-'} {Math.abs(variacao).toFixed(2)}%)
+              </Text>
+              
             </View>
-          </View>
-        )}
+          </TouchableOpacity>)
+        }}
       />
     </View>
   );
