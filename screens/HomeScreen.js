@@ -1,20 +1,20 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   ScrollView,
-  View,
-  Text,
   StyleSheet,
-  TouchableOpacity,
+  Text,
   TextInput,
-  Dimensions,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
 } from "react-native";
 import { BarChart } from "react-native-chart-kit";
-import lembretesData from "../lembretes.json";
 import despesas from "../despesas.json";
-
-const SCREEN_W = Dimensions.get("window").width;
+import lembretesData from "../lembretes.json";
 
 export default function HomeScreen({ navigation, route }) {
+  const { width: windowWidth } = useWindowDimensions();
+  const chartWidth = Math.max(windowWidth - 40, 280);
   const { usuario } = route.params;
 
   const dadosUsuario =
@@ -187,7 +187,7 @@ export default function HomeScreen({ navigation, route }) {
         <Text style={styles.graficoTitulo}>Gastos por dia da semana</Text>
         <BarChart
           data={dadosGrafico}
-          width={SCREEN_W - 64}
+          width={chartWidth}
           height={180}
           yAxisLabel="R$"
           withInnerLines={false}
@@ -201,7 +201,7 @@ export default function HomeScreen({ navigation, route }) {
             labelColor: () => "#9CA3AF",
             propsForLabels: { fontSize: 11 },
           }}
-          style={{ borderRadius: 10 }}
+          style={{ borderRadius: 10, alignSelf: "center" }}
         />
       </View>
 
