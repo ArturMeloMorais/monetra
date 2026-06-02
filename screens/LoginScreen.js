@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import {
     Image,
@@ -10,6 +11,7 @@ import {
     View,
 } from "react-native";
 import pessoas from "../assets/pessoas.json";
+
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -53,9 +55,11 @@ export default function LoginScreen({ navigation }) {
         </View>
 
         <Text style={styles.titulo}>Bem-vindo ao Monetra</Text>
+
         <Text style={styles.subtitulo}>
           Seu controle financeiro inteligente
         </Text>
+
 
         <View style={styles.form}>
           <Text style={styles.label}>E-mail</Text>
@@ -98,9 +102,11 @@ export default function LoginScreen({ navigation }) {
           </TouchableOpacity>
 
           <View style={styles.rodape}>
+
             <Text style={styles.rodapeTexto}>
               Versão 1.0.0 · Monetra © 2025
             </Text>
+
           </View>
         </View>
       </View>
@@ -110,6 +116,7 @@ export default function LoginScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#0F1923" },
+
   topDecor: {
     position: "absolute",
     top: -80,
@@ -185,6 +192,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     letterSpacing: 0.5,
   },
+
   rodape: { marginTop: 20, alignItems: "center" },
   rodapeTexto: { color: "#374151", fontSize: 11 },
 });

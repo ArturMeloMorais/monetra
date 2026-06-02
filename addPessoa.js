@@ -1,3 +1,4 @@
+
 import pessoas from "./assets/pessoas.json";
 
 export function adicionarPessoa(
@@ -10,6 +11,7 @@ export function adicionarPessoa(
   email,
   senha,
 ) {
+
   const novaPessoa = {
     id: Date.now(),
     nome: nome,
@@ -19,10 +21,13 @@ export function adicionarPessoa(
     idioma: idioma,
     telefone: telefone,
     email: email,
+
     senha: senha,
+
   };
 
   pessoas.push(novaPessoa);
 
   console.log("Pessoa adicionada:", novaPessoa);
 }
+

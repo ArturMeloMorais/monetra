@@ -1,6 +1,9 @@
+
 import investimentos from "./assets/investimentos.json";
 
 export function adicionarInvestimento(nome, descricao, imagem, link) {
+
+
   const novoInvestimento = {
     id: Date.now(),
     nome: nome,
@@ -12,4 +15,6 @@ export function adicionarInvestimento(nome, descricao, imagem, link) {
   investimentos.push(novoInvestimento);
 
   console.log("Investimento adicionado:", novoInvestimento);
+
+
 }

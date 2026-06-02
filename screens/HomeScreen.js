@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+
     ScrollView,
     StyleSheet,
     Text,
@@ -29,9 +30,11 @@ export default function HomeScreen({ navigation, route }) {
   const saldo = usuario.salario - totalDespesas;
   const pct = ((totalDespesas / usuario.salario) * 100).toFixed(0);
 
+
   const lembretesDoUsuario = lembretesData.filter(
     (l) => l.usuarioId === usuario.id,
   );
+
   const [lembretes, setLembretes] = useState(lembretesDoUsuario);
   const [editando, setEditando] = useState(null);
   const [novoTitulo, setNovoTitulo] = useState("");
@@ -55,10 +58,12 @@ export default function HomeScreen({ navigation, route }) {
           : item,
       ),
     );
+
     setEditando(null);
   }
 
   function adicionarLembrete() {
+
     setLembretes([
       ...lembretes,
       {
@@ -94,6 +99,7 @@ export default function HomeScreen({ navigation, route }) {
     "sexta-feira": "Sex",
     sabado: "Sab",
     sábado: "Sab",
+
   };
 
   despesasExtras.forEach((d) => {
@@ -108,11 +114,13 @@ export default function HomeScreen({ navigation, route }) {
 
   const primeiroNome = usuario.nome.split(" ")[0];
   const hora = new Date().getHours();
+
   const saudacao =
     hora < 12 ? "Bom dia" : hora < 18 ? "Boa tarde" : "Boa noite";
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+
       <View style={styles.header}>
         <View>
           <Text style={styles.saudacao}>{saudacao},</Text>
@@ -133,9 +141,11 @@ export default function HomeScreen({ navigation, route }) {
         </View>
         <View style={[styles.resumoCard, { backgroundColor: "#1A2535" }]}>
           <Text style={styles.resumoLabel}>Gasto</Text>
+
           <Text style={[styles.resumoValor, { color: "#FCA5A5" }]}>
             R$ {totalDespesas.toFixed(2)}
           </Text>
+
           <Text style={styles.resumoPct}>{pct}% do salário</Text>
         </View>
       </View>
@@ -190,10 +200,12 @@ export default function HomeScreen({ navigation, route }) {
                 placeholder="Descrição"
                 placeholderTextColor="#6B7280"
               />
+
               <TouchableOpacity
                 style={styles.salvarBtn}
                 onPress={() => salvarEdicao(item.id)}
               >
+
                 <Text style={styles.salvarTexto}>Salvar</Text>
               </TouchableOpacity>
             </View>
@@ -205,6 +217,7 @@ export default function HomeScreen({ navigation, route }) {
           )}
 
           <View style={styles.cardBotoes}>
+
             <TouchableOpacity
               style={styles.btnEditar}
               onPress={() => iniciarEdicao(item)}
@@ -215,6 +228,7 @@ export default function HomeScreen({ navigation, route }) {
               style={styles.btnRemover}
               onPress={() => removerLembrete(item.id)}
             >
+
               <Text style={styles.xTexto}>✕</Text>
             </TouchableOpacity>
           </View>
@@ -242,6 +256,8 @@ export default function HomeScreen({ navigation, route }) {
           style={{ borderRadius: 10, alignSelf: "center" }}
         />
       </View>
+
+
     </ScrollView>
   );
 }
@@ -249,6 +265,7 @@ export default function HomeScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#0F1923" },
   content: { padding: 20, paddingBottom: 40 },
+
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -319,10 +336,12 @@ const styles = StyleSheet.create({
     borderLeftWidth: 3,
     borderLeftColor: "#1c7c43",
   },
+
   icone: { fontSize: 22, marginRight: 12 },
   lembreteTitulo: { color: "#F9FAFB", fontWeight: "700", fontSize: 14 },
   lembreteDesc: { color: "#6B7280", fontSize: 13, marginTop: 2 },
   cardBotoes: { gap: 6 },
+
   btnEditar: {
     backgroundColor: "#2D3748",
     padding: 7,
@@ -365,4 +384,5 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginBottom: 12,
   },
+
 });
