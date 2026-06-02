@@ -1,0 +1,135 @@
+{
+  "pessoas": [
+    {
+      "id": 1,
+      "nome": "Lucas",
+      "idade": 24,
+      "foto": "https://i.pravatar.cc/300",
+      "salario": 4500,
+      "idioma": "Português",
+      "telefone": "(11) 98765-4321",
+      "email": "lucas@email.com",
+      "senha": "123456"
+    },
+    {
+      "id": 2,
+      "nome": "Mariana",
+      "idade": 28,
+      "foto": "https://i.pravatar.cc/301",
+      "salario": 6200,
+      "idioma": "Português / Inglês",
+      "telefone": "(21) 99876-5432",
+      "email": "mariana@email.com",
+      "senha": "abc123"
+    },
+    {
+      "id": 3,
+      "nome": "Pessoa",
+      "idade": 28,
+      "foto": "https://i.pravatar.cc/301",
+      "salario": 6200,
+      "idioma": "Português / Inglês",
+      "telefone": "(21) 99876-5432",
+      "email": "email",
+      "senha": "senha"
+    }
+  ],
+  "lembretes": [
+    {
+      "id": 1,
+      "usuarioId": 1,
+      "titulo": "Conta de Luz vence amanhã!",
+      "descricao": "Pague para evitar juros.",
+      "icone": "💡"
+    },
+    {
+      "id": 2,
+      "usuarioId": 1,
+      "titulo": "Chegou a hora de investir na Previdência!",
+      "descricao": "Planeje seu futuro financeiro.",
+      "icone": "💰"
+    },
+    {
+      "id": 3,
+      "usuarioId": 2,
+      "titulo": "Pagar internet",
+      "descricao": "Evitar corte do serviço.",
+      "icone": "🌐"
+    },
+    {
+      "id": 4,
+      "usuarioId": 2,
+      "titulo": "Comprar material da faculdade",
+      "descricao": "Cadernos e canetas.",
+      "icone": "📚"
+    }
+  ],
+  "investimentos": [
+    {
+      "id": 1,
+      "nome": "Renda Fixa",
+      "descricao": "Investimentos com baixo risco e rendimento previsível.",
+      "imagem": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+      "link": "https://www.b3.com.br/pt_br/produtos-e-servicos/renda-fixa/"
+    },
+    {
+      "id": 2,
+      "nome": "Criptomoedas",
+      "descricao": "Investimento digital com alta volatilidade e potencial de retorno.",
+      "imagem": "https://cdn-icons-png.flaticon.com/512/825/825540.png",
+      "link": "https://coinmarketcap.com/"
+    },
+    {
+      "id": 3,
+      "nome": "Previdência Privada",
+      "descricao": "Forma de investimento voltada para aposentadoria futura.",
+      "imagem": "https://cdn-icons-png.flaticon.com/512/3063/3063822.png",
+      "link": "https://www.gov.br/previdencia"
+    }
+  ],
+  "despesas": [
+    {
+      "usuarioId": 1,
+      "despesasFixas": [
+        {
+          "id": 1,
+          "nome": "Aluguel",
+          "valor": 1200
+        },
+        {
+          "id": 2,
+          "nome": "Internet",
+          "valor": 100
+        }
+      ],
+      "despesasExtras": [
+        {
+          "id": 1,
+          "nome": "Restaurante",
+          "valor": 80,
+          "data": "2026-03-10",
+          "diaSemana": "Segunda"
+        }
+      ]
+    },
+    {
+      "usuarioId": 2,
+      "despesasFixas": [
+        {
+          "id": 1,
+          "nome": "Academia",
+          "valor": 120
+        }
+      ],
+      "despesasExtras": [
+        {
+          "id": 1,
+          "nome": "Cinema",
+          "valor": 50,
+          "data": "2026-03-09",
+          "diaSemana": "Domingo"
+        }
+      ]
+    }
+  ]
+}

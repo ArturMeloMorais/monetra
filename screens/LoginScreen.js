@@ -1,17 +1,15 @@
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-    Image,
-    KeyboardAvoidingView,
-    Platform,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import pessoas from "../assets/pessoas.json";
-
+import { getPessoas } from "../services/api";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -19,6 +17,22 @@ export default function LoginScreen({ navigation }) {
   const [emailFocused, setEmailFocused] = useState(false);
   const [senhaFocused, setSenhaFocused] = useState(false);
   const [erro, setErro] = useState("");
+  const [pessoas, setPessoas] = useState([]);
+  const [carregandoPessoas, setCarregandoPessoas] = useState(true);
+
+  useEffect(() => {
+    async function carregarPessoas() {
+      try {
+        const dados = await getPessoas();
+        setPessoas(dados);
+      } catch (error) {
+        console.error("Erro ao carregar usuários:", error);
+      } finally {
+        setCarregandoPessoas(false);
+      }
+    }
+    carregarPessoas();
+  }, []);
 
   function validarLogin() {
     setErro("");
@@ -26,7 +40,10 @@ export default function LoginScreen({ navigation }) {
       setErro("Preencha todos os campos.");
       return;
     }
-    const usuarioEncontrado = pessoas.find((p) => p.email === email);
+    const normalizedEmail = email.trim().toLowerCase();
+    const usuarioEncontrado = pessoas.find(
+      (p) => p.email.trim().toLowerCase() === normalizedEmail,
+    );
     if (!usuarioEncontrado) {
       setErro("Usuário não encontrado.");
       return;
@@ -60,7 +77,6 @@ export default function LoginScreen({ navigation }) {
           Seu controle financeiro inteligente
         </Text>
 
-
         <View style={styles.form}>
           <Text style={styles.label}>E-mail</Text>
           <TextInput
@@ -92,21 +108,25 @@ export default function LoginScreen({ navigation }) {
               <Text style={styles.erroTexto}>⚠ {erro}</Text>
             </View>
           ) : null}
+          {carregandoPessoas ? (
+            <View style={styles.loaderBox}>
+              <Text style={styles.loaderTexto}>Carregando usuários...</Text>
+            </View>
+          ) : null}
 
           <TouchableOpacity
-            style={styles.botao}
+            style={[styles.botao, carregandoPessoas && styles.botaoDisabled]}
             onPress={validarLogin}
             activeOpacity={0.85}
+            disabled={carregandoPessoas}
           >
             <Text style={styles.botaoTexto}>Entrar</Text>
           </TouchableOpacity>
 
           <View style={styles.rodape}>
-
             <Text style={styles.rodapeTexto}>
               Versão 1.0.0 · Monetra © 2025
             </Text>
-
           </View>
         </View>
       </View>
@@ -178,6 +198,17 @@ const styles = StyleSheet.create({
     borderLeftColor: "#EF4444",
   },
   erroTexto: { color: "#FCA5A5", fontSize: 13 },
+  loaderBox: {
+    backgroundColor: "#111827",
+    borderRadius: 12,
+    padding: 10,
+    marginBottom: 14,
+    alignItems: "center",
+  },
+  loaderTexto: {
+    color: "#9CA3AF",
+    fontSize: 13,
+  },
   botao: {
     backgroundColor: "#1c7c43",
     borderRadius: 14,
@@ -185,6 +216,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 4,
     elevation: 6,
+  },
+  botaoDisabled: {
+    opacity: 0.65,
   },
   botaoTexto: {
     color: "#FFFFFF",

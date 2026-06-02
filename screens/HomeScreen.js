@@ -1,17 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    useWindowDimensions,
-    View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
 } from "react-native";
 import { BarChart } from "react-native-chart-kit";
-import lembretesData from "../assets/lembretes.json";
 import despesas from "../despesas.json";
+import { createLembrete, deleteLembrete, getLembretes } from "../services/api";
 
 export default function HomeScreen({ navigation, route }) {
   const { width: windowWidth } = useWindowDimensions();
@@ -30,18 +29,32 @@ export default function HomeScreen({ navigation, route }) {
   const saldo = usuario.salario - totalDespesas;
   const pct = ((totalDespesas / usuario.salario) * 100).toFixed(0);
 
-
-  const lembretesDoUsuario = lembretesData.filter(
-    (l) => l.usuarioId === usuario.id,
-  );
-
-  const [lembretes, setLembretes] = useState(lembretesDoUsuario);
+  const [lembretes, setLembretes] = useState([]);
   const [editando, setEditando] = useState(null);
   const [novoTitulo, setNovoTitulo] = useState("");
   const [novaDescricao, setNovaDescricao] = useState("");
 
-  function removerLembrete(id) {
-    setLembretes(lembretes.filter((item) => item.id !== id));
+  useEffect(() => {
+    async function carregarLembretes() {
+      try {
+        const todos = await getLembretes();
+        setLembretes(todos.filter((l) => l.usuarioId === usuario.id));
+      } catch (error) {
+        console.error("Erro ao carregar lembretes:", error);
+      }
+    }
+    carregarLembretes();
+  }, [usuario.id]);
+
+  async function removerLembrete(id) {
+    try {
+      const sucesso = await deleteLembrete(id);
+      if (sucesso) {
+        setLembretes(lembretes.filter((item) => item.id !== id));
+      }
+    } catch (error) {
+      console.error("Erro ao remover lembrete:", error);
+    }
   }
 
   function iniciarEdicao(item) {
@@ -62,18 +75,21 @@ export default function HomeScreen({ navigation, route }) {
     setEditando(null);
   }
 
-  function adicionarLembrete() {
-
-    setLembretes([
-      ...lembretes,
-      {
-        id: Date.now(),
+  async function adicionarLembrete() {
+    try {
+      const novo = {
         usuarioId: usuario.id,
         titulo: "Novo lembrete",
         descricao: "Toque em ✏️ para editar.",
         icone: "📌",
-      },
-    ]);
+      };
+      const criado = await createLembrete(novo);
+      if (criado) {
+        setLembretes([...lembretes, criado]);
+      }
+    } catch (error) {
+      console.error("Erro ao criar lembrete:", error);
+    }
   }
 
   const gastosPorDia = {
@@ -99,7 +115,6 @@ export default function HomeScreen({ navigation, route }) {
     "sexta-feira": "Sex",
     sabado: "Sab",
     sábado: "Sab",
-
   };
 
   despesasExtras.forEach((d) => {
@@ -120,7 +135,6 @@ export default function HomeScreen({ navigation, route }) {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-
       <View style={styles.header}>
         <View>
           <Text style={styles.saudacao}>{saudacao},</Text>
@@ -205,7 +219,6 @@ export default function HomeScreen({ navigation, route }) {
                 style={styles.salvarBtn}
                 onPress={() => salvarEdicao(item.id)}
               >
-
                 <Text style={styles.salvarTexto}>Salvar</Text>
               </TouchableOpacity>
             </View>
@@ -217,7 +230,6 @@ export default function HomeScreen({ navigation, route }) {
           )}
 
           <View style={styles.cardBotoes}>
-
             <TouchableOpacity
               style={styles.btnEditar}
               onPress={() => iniciarEdicao(item)}
@@ -228,7 +240,6 @@ export default function HomeScreen({ navigation, route }) {
               style={styles.btnRemover}
               onPress={() => removerLembrete(item.id)}
             >
-
               <Text style={styles.xTexto}>✕</Text>
             </TouchableOpacity>
           </View>
@@ -256,8 +267,6 @@ export default function HomeScreen({ navigation, route }) {
           style={{ borderRadius: 10, alignSelf: "center" }}
         />
       </View>
-
-
     </ScrollView>
   );
 }
@@ -384,5 +393,4 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginBottom: 12,
   },
-
 });
