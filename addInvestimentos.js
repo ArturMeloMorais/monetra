@@ -1,20 +1,19 @@
+import { createInvestimento } from "./services/api";
 
-import investimentos from "./assets/investimentos.json";
-
-export function adicionarInvestimento(nome, descricao, imagem, link) {
-
-
+export async function adicionarInvestimento(nome, descricao, imagem, link) {
   const novoInvestimento = {
-    id: Date.now(),
-    nome: nome,
-    descricao: descricao,
-    imagem: imagem,
-    link: link,
+    nome,
+    descricao,
+    imagem,
+    link,
   };
 
-  investimentos.push(novoInvestimento);
-
-  console.log("Investimento adicionado:", novoInvestimento);
-
-
+  try {
+    const resultado = await createInvestimento(novoInvestimento);
+    console.log("Investimento adicionado:", resultado);
+    return resultado;
+  } catch (error) {
+    console.error("Erro ao adicionar investimento:", error);
+    return null;
+  }
 }

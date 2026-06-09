@@ -1,6 +1,4 @@
 import axios from "axios";
-import lembretesFallback from "../assets/lembretes.json";
-import pessoasFallback from "../assets/pessoas.json";
 
 const api = axios.create({
   baseURL: "https://api.coingecko.com/api/v3",
@@ -35,13 +33,10 @@ export const getTopCoins = async () => {
 export const getPessoas = async () => {
   try {
     const response = await dbApi.get("/pessoas");
-    if (Array.isArray(response.data) && response.data.length > 0) {
-      return response.data;
-    }
-    return pessoasFallback;
+    return Array.isArray(response.data) ? response.data : [];
   } catch (error) {
     console.error("Erro ao buscar pessoas:", error);
-    return pessoasFallback;
+    return [];
   }
 };
 
@@ -68,13 +63,10 @@ export const deletePessoa = async (id) => {
 export const getLembretes = async () => {
   try {
     const response = await dbApi.get("/lembretes");
-    if (Array.isArray(response.data) && response.data.length > 0) {
-      return response.data;
-    }
-    return lembretesFallback;
+    return Array.isArray(response.data) ? response.data : [];
   } catch (error) {
     console.error("Erro ao buscar lembretes:", error);
-    return lembretesFallback;
+    return [];
   }
 };
 
@@ -101,7 +93,7 @@ export const deleteLembrete = async (id) => {
 export const getInvestimentos = async () => {
   try {
     const response = await dbApi.get("/investimentos");
-    return response.data;
+    return Array.isArray(response.data) ? response.data : [];
   } catch (error) {
     console.error("Erro ao buscar investimentos:", error);
     return [];
@@ -128,32 +120,62 @@ export const deleteInvestimento = async (id) => {
   }
 };
 
-export const getDespesas = async () => {
+export const getDespesasFixas = async (usuarioId) => {
   try {
-    const response = await dbApi.get("/despesas");
-    return response.data;
+    const response = await dbApi.get(`/despesas-fixas/${usuarioId}`);
+    return Array.isArray(response.data) ? response.data : [];
   } catch (error) {
-    console.error("Erro ao buscar despesas:", error);
+    console.error("Erro ao buscar despesas fixas:", error);
     return [];
   }
 };
 
-export const createDespesa = async (despesa) => {
+export const createDespesaFixa = async (despesa) => {
   try {
-    const response = await dbApi.post("/despesas", despesa);
+    const response = await dbApi.post("/despesas-fixas", despesa);
     return response.data;
   } catch (error) {
-    console.error("Erro ao criar despesa:", error);
+    console.error("Erro ao criar despesa fixa:", error);
     return null;
   }
 };
 
-export const deleteDespesa = async (id) => {
+export const deleteDespesaFixa = async (id) => {
   try {
-    await dbApi.delete(`/despesas/${id}`);
+    await dbApi.delete(`/despesas-fixas/${id}`);
     return true;
   } catch (error) {
-    console.error("Erro ao excluir despesa:", error);
+    console.error("Erro ao excluir despesa fixa:", error);
+    return false;
+  }
+};
+
+export const getDespesasExtras = async (usuarioId) => {
+  try {
+    const response = await dbApi.get(`/despesas-extras/${usuarioId}`);
+    return Array.isArray(response.data) ? response.data : [];
+  } catch (error) {
+    console.error("Erro ao buscar despesas extras:", error);
+    return [];
+  }
+};
+
+export const createDespesaExtra = async (despesa) => {
+  try {
+    const response = await dbApi.post("/despesas-extras", despesa);
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao criar despesa extra:", error);
+    return null;
+  }
+};
+
+export const deleteDespesaExtra = async (id) => {
+  try {
+    await dbApi.delete(`/despesas-extras/${id}`);
+    return true;
+  } catch (error) {
+    console.error("Erro ao excluir despesa extra:", error);
     return false;
   }
 };

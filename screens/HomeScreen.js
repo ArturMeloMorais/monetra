@@ -1,50 +1,56 @@
 import { useEffect, useState } from "react";
 import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  useWindowDimensions,
-  View,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    useWindowDimensions,
+    View,
 } from "react-native";
 import { BarChart } from "react-native-chart-kit";
-import despesas from "../despesas.json";
-import { createLembrete, deleteLembrete, getLembretes } from "../services/api";
+import {
+    createLembrete,
+    deleteLembrete,
+    getDespesasExtras,
+    getDespesasFixas,
+    getLembretes,
+} from "../services/api";
 
 export default function HomeScreen({ navigation, route }) {
   const { width: windowWidth } = useWindowDimensions();
   const chartWidth = Math.max(windowWidth - 40, 280);
   const { usuario } = route.params;
 
-  const dadosUsuario = despesas.find((d) => d.usuarioId === usuario.id) || {
-    despesasFixas: [],
-    despesasExtras: [],
-  };
-
-  const despesasExtras = dadosUsuario.despesasExtras;
-  const totalDespesas =
-    dadosUsuario.despesasFixas.reduce((s, d) => s + Number(d.valor), 0) +
-    despesasExtras.reduce((s, d) => s + Number(d.valor), 0);
-  const saldo = usuario.salario - totalDespesas;
-  const pct = ((totalDespesas / usuario.salario) * 100).toFixed(0);
-
+  const [despesasFixas, setDespesasFixas] = useState([]);
+  const [despesasExtras, setDespesasExtras] = useState([]);
   const [lembretes, setLembretes] = useState([]);
   const [editando, setEditando] = useState(null);
   const [novoTitulo, setNovoTitulo] = useState("");
   const [novaDescricao, setNovaDescricao] = useState("");
 
   useEffect(() => {
-    async function carregarLembretes() {
+    async function carregarDados() {
       try {
+        const fixas = await getDespesasFixas(usuario.id);
+        const extras = await getDespesasExtras(usuario.id);
         const todos = await getLembretes();
+
+        setDespesasFixas(fixas);
+        setDespesasExtras(extras);
         setLembretes(todos.filter((l) => l.usuarioId === usuario.id));
       } catch (error) {
-        console.error("Erro ao carregar lembretes:", error);
+        console.error("Erro ao carregar dados:", error);
       }
     }
-    carregarLembretes();
+    carregarDados();
   }, [usuario.id]);
+
+  const totalDespesas =
+    despesasFixas.reduce((s, d) => s + Number(d.valor), 0) +
+    despesasExtras.reduce((s, d) => s + Number(d.valor), 0);
+  const saldo = usuario.salario - totalDespesas;
+  const pct = ((totalDespesas / usuario.salario) * 100).toFixed(0);
 
   async function removerLembrete(id) {
     try {
@@ -71,7 +77,6 @@ export default function HomeScreen({ navigation, route }) {
           : item,
       ),
     );
-
     setEditando(null);
   }
 
@@ -129,7 +134,6 @@ export default function HomeScreen({ navigation, route }) {
 
   const primeiroNome = usuario.nome.split(" ")[0];
   const hora = new Date().getHours();
-
   const saudacao =
     hora < 12 ? "Bom dia" : hora < 18 ? "Boa tarde" : "Boa noite";
 

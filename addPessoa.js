@@ -1,7 +1,6 @@
+import { createPessoa } from "./services/api";
 
-import pessoas from "./assets/pessoas.json";
-
-export function adicionarPessoa(
+export async function adicionarPessoa(
   nome,
   idade,
   foto,
@@ -11,23 +10,23 @@ export function adicionarPessoa(
   email,
   senha,
 ) {
-
   const novaPessoa = {
-    id: Date.now(),
-    nome: nome,
-    idade: idade,
-    foto: foto,
-    salario: salario,
-    idioma: idioma,
-    telefone: telefone,
-    email: email,
-
-    senha: senha,
-
+    nome,
+    idade,
+    foto,
+    salario,
+    idioma,
+    telefone,
+    email,
+    senha,
   };
 
-  pessoas.push(novaPessoa);
-
-  console.log("Pessoa adicionada:", novaPessoa);
+  try {
+    const resultado = await createPessoa(novaPessoa);
+    console.log("Pessoa adicionada:", resultado);
+    return resultado;
+  } catch (error) {
+    console.error("Erro ao adicionar pessoa:", error);
+    return null;
+  }
 }
-
